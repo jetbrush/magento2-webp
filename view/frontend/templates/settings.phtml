@@ -1,0 +1,17 @@
+<?php
+/**
+ * @var \Kudja\Webp\Block\Settings $block
+ */
+if (!$block->isEnabled()) {
+    return;
+}
+
+$webpConfig = [
+    'tags' => $block->getAllowedTags(),
+    'attributes' => $block->getAllowedAttributes()
+];
+?>
+<script>
+    window.WebpConfig = <?= json_encode($webpConfig, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+</script>
+<script type="text/javascript" src="<?= $block->getViewFileUrl('Kudja_Webp::js/fallback.js') ?>" defer></script>

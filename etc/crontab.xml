@@ -1,0 +1,8 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="kudja_webp_convert" instance="Kudja\Webp\Cron\ProcessQueue" method="execute">
+            <schedule>* * * * *</schedule>
+        </job>
+    </group>
+</config>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <kudja_webp>
+            <general>
+                <enable>0</enable>
+                <allowed_tags>img, source, link, a</allowed_tags>
+                <allowed_attributes>src, data-src, srcset, data-srcset, href, imgsrcset</allowed_attributes>
+                <conversion_command>cwebp -quiet -mt -q 80 -m 6 -pass 10 -af -sharp_yuv '{src}' -o '{target}'</conversion_command>
+                <conversion_limit>100</conversion_limit>
+            </general>
+        </kudja_webp>
+    </default>
+</config>

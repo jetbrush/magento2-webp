@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <table name="kudja_webp_queue" resource="default" engine="innodb" comment="Queue for WebP Conversion">
+        <column name="queue_id" xsi:type="int" unsigned="true" nullable="false" identity="true" comment="Queue ID"/>
+        <column name="path" xsi:type="text" nullable="false" comment="Full image path or URL"/>
+        <column name="hash" xsi:type="char" length="32" nullable="false" comment="Path hash"/>
+        <column name="status" xsi:type="smallint" nullable="false" default="0" comment="Status: -1 = error, 0 = new, 1 = done"/>
+        <column name="updated_at" xsi:type="timestamp" nullable="false" on_update="true" default="CURRENT_TIMESTAMP" comment="Last update time"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="queue_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="KUDJA_WEBP_QUEUE_HASH_UNIQUE">
+            <column name="hash"/>
+        </constraint>
+        <index indexType="btree" referenceId="KUDJA_WEBP_QUEUE_UPDATED_AT">
+            <column name="updated_at"/>
+        </index>
+    </table>
+</schema>

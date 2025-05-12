@@ -1,15 +1,16 @@
-# Magento 2 WebP Images Optimizer
+# Magento 2 WebP Image Optimizer
 
-Simple light WebP images converter for Magento 2 with almost no overhead in response time.
-Parses html/json before sending it to client and replaces jpg|png images with webp format. 
-Not yet converted images are added to queue for conversion and converted by cron.
-For some older browsers that [doesn't support webp](https://caniuse.com/webp), fallback js is used to load original images.
+A lightweight Magento 2 module that automatically replaces `.jpg` and `.png` images with `.webp` equivalents in HTML and JSON responses.  
+Conversion happens in the background, ensuring fast page loads and compatibility with all modern and legacy browsers.
 
-- process html
-- process x-magento-init blocks (images gallery, swatches, etc.)
-- process json responses (like cart, etc)
-- fallback for old browsers
-- works well with fotorama image gallery, swatches, ajax cart etc. as it is extensions independent
+## Highlights
+
+- **Seamless Integration**: Replaces image URLs in page output using efficient HTML/JSON parsing. No template overrides or theme changes required.
+- **Performance-Oriented**: Designed to operate with negligible impact on response times, ensuring a seamless user experience.
+- **Asynchronous WebP Conversion**: Original images are queued for background conversion via cron jobs — no delay for users.
+- **Frontend Compatibility**: Works with Magento core features like fotorama, swatches, and ajax cart, sections etc.
+- **Third-Party Extensions**: Designed to work independently, minimizing conflicts with other modules.
+- **Browser Support**: Automatically serves original images to browsers lacking WebP support via a JavaScript fallback.
 
 ## Installation
 
@@ -19,16 +20,11 @@ bin/magento module:enable Kudja_Webp
 bin/magento setup:upgrade
 ```
 
-The only thing you need to install on your server is `cwebp`. You can find it in the [webp](https://developers.google.com/speed/webp/download) package.
+### Install `cwebp` 
 
 Ubuntu/Debian:
-
 ```bash
-apt-get install webp
+sudo apt install webp
 ```
 
-## Remove generated images
 
-```bash
-find -L pub/media -type f \( -iname "*.jpg.webp" -o -iname "*.jpeg.webp" -o -iname "*.png.webp" \) -delete
-```

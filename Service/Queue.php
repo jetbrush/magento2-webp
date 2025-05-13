@@ -23,31 +23,31 @@ class Queue
     /**
      * @param array $paths
      *
-     * @return int
+     * @return void
      */
-    public function batchAddImages(array $paths): int
+    public function batchAddImages(array $paths): void
     {
         try {
             if (empty($paths)) {
-                return 0;
+                return;
             }
 
             $rows = [];
             $bind = [];
-
             foreach ($paths as $index => $path) {
                 $path = trim($path);
                 if (!$path) {
                     continue;
                 }
 
-                $rows[]               = "(:path{$index}, :hash{$index}, 0)";
+                $rows[] = "(:path{$index}, :hash{$index}, 0)";
+
                 $bind["path{$index}"] = $path;
                 $bind["hash{$index}"] = md5($path);
             }
 
             if (empty($rows)) {
-                return 0;
+                return;
             }
 
             $sql = sprintf(
@@ -56,10 +56,10 @@ class Queue
                 implode(', ', $rows)
             );
 
-            return $this->connection->query($sql, $bind)->rowCount();
+            $this->connection->query($sql, $bind);
         } catch (\Exception $e) {
             $this->logger->error('Error adding images to queue: ' . $e->getMessage());
-            return 0;
+            return;
         }
     }
 

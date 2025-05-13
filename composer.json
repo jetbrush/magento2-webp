@@ -2,7 +2,6 @@
     "name": "kudja/magento2-webp",
     "description": "Magento 2 WebP image optimizer",
     "type": "magento2-module",
-    "version": "0.1.0",
     "license": "OSL-3.0",
     "keywords": [
         "magento",

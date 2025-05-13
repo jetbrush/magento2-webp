@@ -2,6 +2,7 @@
 
 namespace Kudja\Webp\Service;
 
+use Kudja\Webp\Model\ResourceModel\Queue\Collection;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Kudja\Webp\Logger\Logger;
@@ -12,6 +13,7 @@ class Queue
     private string           $table;
 
     public function __construct(
+        private Collection $queueCollection,
         private Logger     $logger,
         ResourceConnection $resource
     )
@@ -29,6 +31,17 @@ class Queue
     {
         try {
             if (empty($paths)) {
+                return;
+            }
+
+            $paths    = array_unique($paths);
+            $hashes   = array_map('md5', $paths);
+
+            $existing = $this->queueCollection->addFieldToFilter('hash', ['in' => $hashes])
+                                              ->getColumnValues('path');
+
+            $toInsert = array_diff($paths, $existing);
+            if (empty($toInsert)) {
                 return;
             }
 
